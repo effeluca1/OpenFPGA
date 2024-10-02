@@ -74,7 +74,7 @@ write_fabric_verilog --file ./SRC --explicit_port_mapping --include_timing --pri
 # write_pnr_sdc --file ./SDC_PnR --output_hierarchy --constrain_configurable_memory_outputs --constrain_configurable_memory_outputs --constrain_grid --constrain_sb --constrain_cb --constrain_routing_multiplexer_outputs --constrain_switch_block_outputs --constrain_zero_delay_paths --time_unit ${OPENFPGA_SDC_TIME_UNIT}
 
 #write_pnr_sdc --file ./SDC_PnR --time_unit ${OPENFPGA_SDC_TIME_UNIT}
-write_pnr_sdc --file ./SDC_PnR --time_unit ${OPENFPGA_SDC_TIME_UNIT} --flatten_names --constrain_grid --constrain_sb --constrain_cb --constrain_configurable_memory_outputs --constrain_configurable_memory_outputs --constrain_routing_multiplexer_outputs --constrain_switch_block_outputs --verbose
+write_pnr_sdc --file ./SDC_PnR --time_unit ${OPENFPGA_SDC_TIME_UNIT} --constrain_global_port --flatten_names --constrain_grid --constrain_sb --constrain_cb --constrain_configurable_memory_outputs --constrain_routing_multiplexer_outputs --constrain_switch_block_outputs --verbose
 
 
 # Write SDC to disable timing for configure ports
