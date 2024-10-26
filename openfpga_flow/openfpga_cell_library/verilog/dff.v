@@ -73,6 +73,34 @@ assign Q = q_reg;
 endmodule //End Of Module
 
 
+//--LUCA---------------------------------------------------
+// Function    : D-type flip-flop with 
+//               - asynchronous active high reset
+//-----------------------------------------------------
+module DFFR_EN (
+  input  RST, // Reset input
+  input  CK, // Clock Input
+//  input  CFG_EN,
+  input  D, // Data Input
+  output Q, // Q output
+  output QN // QB output
+);
+//------------Internal Variables--------
+reg q_reg;
+
+//-------------Code Starts Here---------
+always @ ( posedge CK or posedge RST)
+if (RST) begin
+  q_reg <= 1'b0;
+end else begin
+  q_reg <= D;
+end
+
+assign Q = q_reg;
+assign QN = ~q_reg;
+
+endmodule //End Of Module
+
 //-----------------------------------------------------
 // Function    : D-type flip-flop with 
 //               - asynchronous active high reset
@@ -594,5 +622,38 @@ end
 assign SOUT = q_reg;
 assign WLW = WEN ? q_reg : 1'b0;
 assign WLR = 1'b0; // Use a constant output just for simple testing
+
+endmodule //End Of Module
+
+
+//--written_by_Luca---------------------------------------------------
+// Function    : D-type flip-flop with 
+//               - asynchronous active LOW reset
+//               - scan-chain input
+//               - a cfg enable 
+//-----------------------------------------------------
+module DFFREN2 (
+  input RST, // Reset input
+  input CK, // Clock Input
+  input CFG_EN, // Scan-chain Enable
+  input D, // Data Input
+  output Q, // Q output
+  output QN, // QN output
+  output SCAN_Q // SCAN_Q output
+);
+//------------Internal Variables--------
+reg q_reg;
+
+//-------------Code Starts Here---------
+always @ ( posedge CK or negedge RST)
+if (~RST) begin
+  q_reg <= 1'b0;
+end else if (CFG_EN) begin
+  q_reg <= D;
+end
+
+assign Q = q_reg;
+assign QN = ~q_reg;
+assign SCAN_Q = q_reg;
 
 endmodule //End Of Module
