@@ -126,12 +126,12 @@
         </circuit_model>
 	-->
         <!--DFF subckt ports should be defined as <D> <Q> <CLK> <RESET> <SET>  -->
-        <circuit_model type="ff" name="DFFSRQ" prefix="DFFSRQ" spice_netlist="${OPENFPGA_PATH}/openfpga_flow/openfpga_cell_library/spice/dff.sp" verilog_netlist="${OPENFPGA_PATH}/openfpga_flow/openfpga_cell_library/verilog/dff.v">
+        <circuit_model type="ff" name="DFFRQ" prefix="DFFRQ" spice_netlist="${OPENFPGA_PATH}/openfpga_flow/openfpga_cell_library/spice/dff.sp" verilog_netlist="${OPENFPGA_PATH}/openfpga_flow/openfpga_cell_library/verilog/dff.v">
             <design_technology type="cmos"/>
             <input_buffer exist="true" circuit_model_name="inv"/>
             <output_buffer exist="true" circuit_model_name="inv"/>
             <port type="input" prefix="D" size="1"/>
-            <port type="input" prefix="set" lib_name="SET" size="1" is_global="true" default_val="0" is_set="true"/>
+            <!-- <port type="input" prefix="set" lib_name="SET" size="1" is_global="true" default_val="0" is_set="true"/> -->
             <port type="input" prefix="reset" lib_name="RST" size="1" is_global="true" default_val="0" is_reset="true"/>
             <port type="output" prefix="Q" size="1"/>
             <port type="clock" prefix="clk" lib_name="CK" size="1" is_global="true" default_val="0" />
@@ -149,14 +149,17 @@
             <port type="sram" prefix="sram" size="64"/>
         </circuit_model>
         <!-- <!-\-Scan-chain DFF subckt ports should be defined as <D> <Q> <Qb> <CLK> <RESET> <SET>  -\-> -->
-        <circuit_model type="ccff" name="DFFR_EN" prefix="DFFR_EN" spice_netlist="${OPENFPGA_PATH}/openfpga_flow/openfpga_cell_library/spice/dff.sp" verilog_netlist="${OPENFPGA_PATH}/openfpga_flow/openfpga_cell_library/verilog/dff.v">
+        <circuit_model type="ccff" name="DFFREN" prefix="DFFREN" spice_netlist="${OPENFPGA_PATH}/openfpga_flow/openfpga_cell_library/spice/dff.sp" verilog_netlist="${OPENFPGA_PATH}/openfpga_flow/openfpga_cell_library/verilog/dff.v">
             <design_technology type="cmos"/>
-            <input_buffer exist="true" circuit_model_name="inv"/>
-            <output_buffer exist="true" circuit_model_name="inv"/>
+            <input_buffer exist="false" circuit_model_name="inv"/>
+            <output_buffer exist="false" circuit_model_name="inv"/>
             <port type="input" prefix="pReset" lib_name="RST" size="1" is_global="true" default_val="0" is_reset="true" is_prog="true"/>
             <port type="input" prefix="D" size="1"/>
-            <port type="output" prefix="Q" size="1"/>
-            <port type="output" prefix="QN" size="1"/>
+	     <port type="input" prefix="config_enable" lib_name="CFGE" size="1" is_global="true" default_val="1" is_config_enable="true"/>
+            <!-- <port type="output" prefix="SCAN_Q" size="1"/> -->
+            <!-- <port type="output" prefix="QN" size="1"/> -->
+	    <port type="output" prefix="Q" size="1"/>
+	    
             <port type="clock" prefix="prog_clk" lib_name="CK" size="1" is_global="true" default_val="0" is_prog="true"/>
         </circuit_model>
         <!-- <!-\-Scan-chain DFF subckt ports should be defined as <D> <Q> <Qb> <CLK> <RESET> <SET>  -\-> -->
@@ -172,16 +175,16 @@
         <!-- </circuit_model> -->
         <circuit_model type="iopad" name="GPIO" prefix="GPIO" spice_netlist="${OPENFPGA_PATH}/openfpga_flow/openfpga_cell_library/spice/gpio.sp" verilog_netlist="${OPENFPGA_PATH}/openfpga_flow/openfpga_cell_library/verilog/gpio.v">
             <design_technology type="cmos"/>
-            <input_buffer exist="true" circuit_model_name="inv"/>
-            <output_buffer exist="true" circuit_model_name="inv"/>
+            <input_buffer exist="false" circuit_model_name="inv"/>
+            <output_buffer exist="false" circuit_model_name="inv"/>
             <port type="inout" prefix="PAD" size="1" is_global="true" is_io="true" is_data_io="true"/>
-            <port type="sram" prefix="DIR" size="1" mode_select="true" circuit_model_name="DFFR_EN" default_val="1"/>
+            <port type="sram" prefix="DIR" size="1" mode_select="true" circuit_model_name="DFFREN" default_val="1"/>
             <port type="input" prefix="outpad" lib_name="A" size="1"/>
             <port type="output" prefix="inpad" lib_name="Y" size="1"/>
         </circuit_model>
     </circuit_library>
     <configuration_protocol>
-        <organization type="scan_chain" circuit_model_name="DFFR_EN"/>
+        <organization type="scan_chain" circuit_model_name="DFFREN"/>
     </configuration_protocol>
     <connection_block>
         <switch name="ipin_cblock" circuit_model_name="mux_tree"/>
@@ -198,7 +201,7 @@
         </pb_type>
         <pb_type name="clb.fle" physical_mode_name="physical"/>
         <pb_type name="clb.fle[physical].ble6.lut6" circuit_model_name="lut6"/>
-        <pb_type name="clb.fle[physical].ble6.ff" circuit_model_name="DFFSRQ"/>
+        <pb_type name="clb.fle[physical].ble6.ff" circuit_model_name="DFFRQ"/>
         <pb_type name="clb.fle[n1_lut6].ble6.lut6" physical_pb_type_name="clb.fle[physical].ble6.lut6"/>
         <pb_type name="clb.fle[n1_lut6].ble6.ff" physical_pb_type_name="clb.fle[physical].ble6.ff"/>
 

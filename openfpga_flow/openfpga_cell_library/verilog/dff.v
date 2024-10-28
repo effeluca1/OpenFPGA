@@ -632,14 +632,14 @@ endmodule //End Of Module
 //               - scan-chain input
 //               - a cfg enable 
 //-----------------------------------------------------
-module SDFFEN (
+module DFFREN (
   input RST, // Reset input
   input CK, // Clock Input
   input CFGE, // Scan-chain Enable
   input D, // Data Input
-  output Q, // Q output
-  output QN, // QN output
-  output SCAN_Q // SCAN_Q output
+  output Q // Q output
+ //  output QN, // QN output
+ // output SCAN_Q // SCAN_Q output
 
 );
 //------------Internal Variables--------
@@ -654,8 +654,8 @@ end else if (CFGE) begin
 end
 
 assign Q = q_reg;
-assign QN = ~q_reg;
-assign SCAN_Q = q_reg;
+// assign QN = ~q_reg;
+// assign SCAN_Q = q_reg;
 
 endmodule //End Of Module
 
