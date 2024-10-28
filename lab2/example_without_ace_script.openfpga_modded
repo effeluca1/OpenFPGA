@@ -78,7 +78,7 @@ write_pnr_sdc --file ./SDC_PnR --time_unit ${OPENFPGA_SDC_TIME_UNIT} --constrain
 
 
 # Write SDC to disable timing for configure ports
-write_sdc_disable_timing_configure_ports --file ./SDC_dis_cof_ports/disable_configure_ports.sdc 
+write_sdc_disable_timing_configure_ports --flatten_names --file ./SDC_dis_cof_ports/disable_configure_ports.sdc 
 
 # Write SDC for configuration_chain
 write_configuration_chain_sdc --file ./SDC_conf_chain/conf_chain.sdc --time_unit ${OPENFPGA_SDC_TIME_UNIT} --max_delay 10 --min_delay 0.01
@@ -86,7 +86,7 @@ write_configuration_chain_sdc --file ./SDC_conf_chain/conf_chain.sdc --time_unit
 
 
 # Write the SDC to run timing analysis for a mapped FPGA fabric
-write_analysis_sdc --file ./SDC_analysis
+write_analysis_sdc --file ./SDC_analysis 
 
 # Finish and exit OpenFPGA
 exit
