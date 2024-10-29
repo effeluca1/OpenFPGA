@@ -633,32 +633,30 @@ endmodule //End Of Module
 //               - a cfg enable 
 //-----------------------------------------------------
 module DFFREN (
-  input RST, // Reset input
-  input CK, // Clock Input
-  input CFGE, // Scan-chain Enable
-  input D, // Data Input
-  output Q // Q output
+  input wire RST, // Reset input
+  input wire CK, // Clock Input
+  input wire CFGE, // Enable
+  input wire D, // Data Input
+  output reg Q // Q output
  //  output QN, // QN output
  // output SCAN_Q // SCAN_Q output
 
 );
 //------------Internal Variables--------
-reg q_reg;
 
 //-------------Code Starts Here---------
-always @ ( posedge CK or negedge RST)
+always @( posedge CK or posedge RST )
 if (RST) begin
-  q_reg <= 1'b0;
+  Q <= 1'b0;
 end else if (CFGE) begin
-  q_reg <= D;
+  Q <= D;
 end
 
-assign Q = q_reg;
+/assign Q = q_reg;
 // assign QN = ~q_reg;
 // assign SCAN_Q = q_reg;
 
 endmodule //End Of Module
-
 
 // //-----------------------------------------------------
 // // Function    : D-type flip-flop with 
